@@ -93,7 +93,7 @@ onMounted(() => {
 }
 
 .purchase-button {
-  background-color: #42b883;
+  background-color: #f0c80f;
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -104,7 +104,7 @@ onMounted(() => {
 }
 
 .purchase-button:hover:not(:disabled) {
-  background-color: #3aa876;
+  background-color: #f0c80f;
 }
 
 .purchase-button:disabled {

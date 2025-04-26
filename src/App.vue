@@ -7,7 +7,7 @@
 
 <style scoped>
 .navbar {
-  background-color: #42b883;
+  background-color: #f0c80f;
   padding: 1rem 2rem;
 }
 
