@@ -7,7 +7,6 @@
            :key="book.id" 
            class="book-card"
            @click="navigateToBook(book.id)">
-        <img :src="book.coverImage" :alt="book.title" class="book-cover">
         <div class="book-info">
           <h3>{{ book.title }}</h3>
           <p class="author">by {{ book.author }}</p>
@@ -29,7 +28,7 @@ const books = ref([])
 const fetchBooks = async () => {
   try {
     const response = await bookService.getAllBooks()
-    books.value = response.data
+    books.value = response.data.books
   } catch (error) {
     console.error('Error fetching books:', error)
   }
@@ -40,6 +39,7 @@ const navigateToBook = (bookId) => {
 }
 
 onMounted(() => {
+  console.log('BookList mounted!')
   fetchBooks()
 })
 </script>
@@ -67,13 +67,6 @@ onMounted(() => {
 .book-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.book-cover {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 4px;
 }
 
 .book-info {

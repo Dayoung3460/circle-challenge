@@ -1,23 +1,18 @@
 <template>
   <div v-if="book" class="book-details">
     <div class="book-content">
-      <div class="book-image">
-        <img :src="book.coverImage" :alt="book.title">
-      </div>
-      
       <div class="book-info">
         <h1>{{ book.title }}</h1>
         <h2>by {{ book.author }}</h2>
-        <p class="description">{{ book.description }}</p>
         <div class="details">
           <p><strong>ISBN:</strong> {{ book.isbn }}</p>
           <p><strong>Price:</strong> ${{ book.price }}</p>
-          <p><strong>Available:</strong> {{ book.stockCount }} copies</p>
+          <p><strong>Available:</strong> {{ book.availableStock }}</p>
         </div>
         
         <button 
           @click="purchaseBook" 
-          :disabled="isPurchasing || book.stockCount === 0"
+          :disabled="isPurchasing || book.availableStock === 0"
           class="purchase-button"
         >
           {{ purchaseButtonText }}
@@ -46,7 +41,7 @@ const purchaseButtonText = computed(() => {
 const fetchBookDetails = async () => {
   try {
     const response = await bookService.getBookById(route.params.id)
-    book.value = response.data
+    book.value = response.data.book
   } catch (error) {
     console.error('Error fetching book details:', error)
   }
@@ -59,7 +54,7 @@ const purchaseBook = async () => {
   try {
     await bookService.purchaseBook(book.value.id)
     alert('Purchase successful!')
-    await fetchBookDetails() // Refresh book details to update stock count
+    await fetchBookDetails()
   } catch (error) {
     alert('Failed to purchase book. Please try again.')
     console.error('Error purchasing book:', error)
@@ -86,20 +81,8 @@ onMounted(() => {
   gap: 2rem;
 }
 
-.book-image img {
-  width: 100%;
-  max-width: 400px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
 .book-info {
   padding: 1rem;
-}
-
-.description {
-  margin: 1.5rem 0;
-  line-height: 1.6;
 }
 
 .details {
