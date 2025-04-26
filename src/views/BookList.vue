@@ -28,7 +28,7 @@ const books = ref([])
 const fetchBooks = async () => {
   try {
     const response = await bookService.getAllBooks()
-    books.value = response.data.books
+    books.value = response.data.books.filter(book => book.availableStock !== 0)
   } catch (error) {
     console.error('Error fetching books:', error)
   }
@@ -39,7 +39,6 @@ const navigateToBook = (bookId) => {
 }
 
 onMounted(() => {
-  console.log('BookList mounted!')
   fetchBooks()
 })
 </script>
